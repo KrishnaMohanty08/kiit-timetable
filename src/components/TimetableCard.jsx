@@ -1,7 +1,11 @@
-const TimetableCard = ({ data, onBack }) => {
-  const { day, section, timetable, message } = data;
+import { useState } from 'react'; // If needed for internal state
 
-  if (!timetable || timetable.length === 0) {
+const TimetableCard = ({ data, view, onViewChange, onBack }) => {
+  const { section, fullTimetable, today } = data || {};
+  const currentSchedule = view === 'today' ? (today?.timetable || []) : null;
+  const isTodayEmpty = today?.timetable?.length === 0;
+
+  if (view !== 'week' && isTodayEmpty) {
     return (
       <div className="glass-card rounded-3xl p-8 md:p-12 w-full max-w-4xl animate-scale-in">
         <div className="text-center">
@@ -28,26 +32,31 @@ const TimetableCard = ({ data, onBack }) => {
   return (
     <div className="glass-card rounded-3xl p-6 md:p-10 w-full max-w-6xl animate-scale-in">
       {/* Header */}
-      <div className="mb-8">
-        <button
-          onClick={onBack}
-          className="glass-button px-4 py-2 rounded-lg text-sm font-medium mb-4 inline-flex items-center gap-2 hover:scale-105 transition-transform"
-        >
+      <div className="mb-8 flex justify-between items-center">
+        <button onClick={onBack} className="glass-button px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2 hover:scale-105 transition-transform">
           ← Back
         </button>
-        
-        <div className="text-center">
+        <div className="text-center flex-1">
           <h2 className="text-gradient font-poppins text-3xl md:text-4xl font-bold mb-2">
-            {day}'s Schedule
+            {view === 'today' ? `${today.day}'s Schedule` : 'Weekly Schedule'}
           </h2>
           <p className="text-muted-foreground text-lg">
             Section: <span className="text-primary font-semibold text-xl">{section}</span>
           </p>
         </div>
+        <button
+          onClick={() => onViewChange(view === 'today' ? 'week' : 'today')}
+          className="glass-button px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2 hover:scale-105 transition-transform"
+        >
+          {view === 'today' ? 'Full Week 📅' : 'Today ⏰'}
+        </button>
       </div>
 
-      {/* Timetable */}
-      <div className="overflow-x-auto">
+      {view === 'today' ? (
+        // Existing daily table JSX using currentSchedule
+        
+        <div className="overflow-x-auto">
+          <table className="w-full"> {<div className="overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
@@ -102,7 +111,58 @@ const TimetableCard = ({ data, onBack }) => {
             })}
           </tbody>
         </table>
+      </div>} </table>
+        </div>
+      ) : (
+        // Week view: List of days
+        <div className="space-y-6">
+          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => {
+            const daySchedule = fullTimetable[day] || [];
+            const hasClasses = daySchedule.length > 0;
+            return (
+              <div key={day} className={`glass-card rounded-xl p-4 ${!hasClasses ? 'opacity-50' : ''}`}>
+                <h3 className="font-semibold text-lg mb-3">{day}</h3>
+                {hasClasses ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full"> {/* Simplified table for day */ } </table>
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground text-sm">No classes</p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Existing summary, adapt for week if needed */}
+      {!isTodayEmpty && view === 'today' && ( /* summary JSX */ )}
+    </div>
+  );
+};
+  return (
+    <div className="glass-card rounded-3xl p-6 md:p-10 w-full max-w-6xl animate-scale-in">
+      {/* Header */}
+      <div className="mb-8">
+        <button
+          onClick={onBack}
+          className="glass-button px-4 py-2 rounded-lg text-sm font-medium mb-4 inline-flex items-center gap-2 hover:scale-105 transition-transform"
+        >
+          ← Back
+        </button>
+        
+        <div className="text-center">
+          <h2 className="text-gradient font-poppins text-3xl md:text-4xl font-bold mb-2">
+            {day}'s Schedule
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Section: <span className="text-primary font-semibold text-xl">{section}</span>
+          </p>
+        </div>
       </div>
+
+      {/* Timetable */}
+      
 
       {/* Mobile view - Additional info */}
       <div className="md:hidden mt-6 space-y-2">

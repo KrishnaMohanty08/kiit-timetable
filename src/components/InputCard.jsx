@@ -12,10 +12,10 @@ const InputCard = ({ onSubmit }) => {
       return;
     }
     
-    if (!/^\d{7,8}$/.test(rollNumber.trim())) {
-      setError('Please enter a valid 7-8 digit roll number');
-      return;
-    }
+    if (!/^\d{6,8}$/.test(rollNumber.trim())) {
+  setError('Please enter a valid 6-8 digit roll number');
+  return;
+}
     
     setError('');
     onSubmit(rollNumber.trim());
