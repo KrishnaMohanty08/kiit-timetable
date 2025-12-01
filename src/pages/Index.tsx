@@ -9,7 +9,9 @@ const Index = () => {
   const [timetableData, setTimetableData] = useState(null);
   const [view, setView] = useState('today');
 
-  const handleRollNumberSubmit = async (rollNumber) => {
+  const handleRollNumberSubmit = async (rollNumber, view) => {
+  setView(view); 
+
     setLoading(true);
 
     try {

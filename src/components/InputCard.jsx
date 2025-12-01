@@ -3,22 +3,23 @@ import { useState } from 'react';
 const InputCard = ({ onSubmit }) => {
   const [rollNumber, setRollNumber] = useState('');
   const [error, setError] = useState('');
+  const [view, setView] = useState('today'); // NEW
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!rollNumber.trim()) {
       setError('Please enter your roll number');
       return;
     }
-    
+
     if (!/^\d{6,8}$/.test(rollNumber.trim())) {
-  setError('Please enter a valid 6-8 digit roll number');
-  return;
-}
-    
+      setError('Please enter a valid 6-8 digit roll number');
+      return;
+    }
+
     setError('');
-    onSubmit(rollNumber.trim());
+    onSubmit(rollNumber.trim(), view); // PASS view
   };
 
   return (
@@ -32,6 +33,33 @@ const InputCard = ({ onSubmit }) => {
         </p>
       </div>
 
+      {/* VIEW SELECTOR */}
+      <div className="flex justify-center gap-4 mb-6">
+        <button
+          type="button"
+          onClick={() => setView('today')}
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+            view === 'today'
+              ? 'glass-button scale-105'
+              : 'bg-secondary/40 hover:bg-secondary/60'
+          }`}
+        >
+          Today ⏰
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setView('week')}
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+            view === 'week'
+              ? 'glass-button scale-105'
+              : 'bg-secondary/40 hover:bg-secondary/60'
+          }`}
+        >
+          Weekly 📅
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label 
@@ -40,6 +68,7 @@ const InputCard = ({ onSubmit }) => {
           >
             Enter Your Roll Number
           </label>
+
           <input
             id="rollNumber"
             type="text"
@@ -49,6 +78,7 @@ const InputCard = ({ onSubmit }) => {
             maxLength={8}
             className="w-full px-6 py-4 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-lg"
           />
+
           {error && (
             <p className="text-destructive text-sm mt-2 animate-fade-in">
               {error}
@@ -60,7 +90,7 @@ const InputCard = ({ onSubmit }) => {
           type="submit"
           className="glass-button w-full py-4 rounded-xl font-poppins font-semibold text-lg text-foreground glow-green"
         >
-          Get Today's Timetable 📚
+          {view === 'today' ? "Get Today's Timetable 📚" : "Get Weekly Timetable 📅"}
         </button>
       </form>
 
