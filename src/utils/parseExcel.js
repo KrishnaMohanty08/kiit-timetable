@@ -7,174 +7,158 @@ import * as XLSX from 'xlsx';
  * 2. timetable.json - Weekly timetable for each section
  */
 
+let cachedData = null;
+
 export const parseExcelFiles = async () => {
-  try {
-    // Note: In production, you would read actual Excel files
-    // For now, we'll use sample data structure
-    
-    // Sample structure for sections.json
-    const sectionsData = {
-      "23051001": "CSE-6A",
-      "23051002": "CSE-6A",
-      "23051025": "CSE-6B",
-      "23051026": "CSE-6B",
-      "23051050": "CSE-6C",
-      "23051051": "CSE-6C",
-    };
-
-    // Sample structure for timetable.json
-    const timetableData = {
-      "CSE-6A": {
-        "Monday": [
-          { time: "09:00-10:00", subject: "DBMS", room: "B-204", faculty: "Dr. Sharma" },
-          { time: "10:00-11:00", subject: "Operating Systems", room: "B-205", faculty: "Dr. Kumar" },
-          { time: "11:00-12:00", subject: "Computer Networks", room: "B-204", faculty: "Dr. Patel" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Software Engineering", room: "B-206", faculty: "Dr. Singh" },
-          { time: "02:00-03:00", subject: "Compiler Design", room: "B-207", faculty: "Dr. Verma" },
-        ],
-        "Tuesday": [
-          { time: "09:00-10:00", subject: "Computer Networks Lab", room: "Lab-3", faculty: "Dr. Patel" },
-          { time: "10:00-11:00", subject: "Computer Networks Lab", room: "Lab-3", faculty: "Dr. Patel" },
-          { time: "11:00-12:00", subject: "DBMS", room: "B-204", faculty: "Dr. Sharma" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Operating Systems", room: "B-205", faculty: "Dr. Kumar" },
-          { time: "02:00-03:00", subject: "Compiler Design", room: "B-207", faculty: "Dr. Verma" },
-        ],
-        "Wednesday": [
-          { time: "09:00-10:00", subject: "Software Engineering", room: "B-206", faculty: "Dr. Singh" },
-          { time: "10:00-11:00", subject: "DBMS Lab", room: "Lab-2", faculty: "Dr. Sharma" },
-          { time: "11:00-12:00", subject: "DBMS Lab", room: "Lab-2", faculty: "Dr. Sharma" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Operating Systems", room: "B-205", faculty: "Dr. Kumar" },
-          { time: "02:00-03:00", subject: "Computer Networks", room: "B-204", faculty: "Dr. Patel" },
-        ],
-        "Thursday": [
-          { time: "09:00-10:00", subject: "Compiler Design", room: "B-207", faculty: "Dr. Verma" },
-          { time: "10:00-11:00", subject: "Software Engineering", room: "B-206", faculty: "Dr. Singh" },
-          { time: "11:00-12:00", subject: "DBMS", room: "B-204", faculty: "Dr. Sharma" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Computer Networks", room: "B-204", faculty: "Dr. Patel" },
-          { time: "02:00-03:00", subject: "Operating Systems", room: "B-205", faculty: "Dr. Kumar" },
-        ],
-        "Friday": [
-          { time: "09:00-10:00", subject: "Operating Systems Lab", room: "Lab-1", faculty: "Dr. Kumar" },
-          { time: "10:00-11:00", subject: "Operating Systems Lab", room: "Lab-1", faculty: "Dr. Kumar" },
-          { time: "11:00-12:00", subject: "Compiler Design", room: "B-207", faculty: "Dr. Verma" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Software Engineering", room: "B-206", faculty: "Dr. Singh" },
-          { time: "02:00-03:00", subject: "Computer Networks", room: "B-204", faculty: "Dr. Patel" },
-        ],
-        "Saturday": [
-          { time: "09:00-10:00", subject: "Compiler Design Lab", room: "Lab-4", faculty: "Dr. Verma" },
-          { time: "10:00-11:00", subject: "Compiler Design Lab", room: "Lab-4", faculty: "Dr. Verma" },
-          { time: "11:00-12:00", subject: "DBMS", room: "B-204", faculty: "Dr. Sharma" },
-        ],
-        "Sunday": []
-      },
-      "CSE-6B": {
-        "Monday": [
-          { time: "09:00-10:00", subject: "Operating Systems", room: "C-101", faculty: "Dr. Kumar" },
-          { time: "10:00-11:00", subject: "DBMS", room: "C-102", faculty: "Dr. Sharma" },
-          { time: "11:00-12:00", subject: "Software Engineering", room: "C-103", faculty: "Dr. Singh" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Computer Networks", room: "C-104", faculty: "Dr. Patel" },
-          { time: "02:00-03:00", subject: "Compiler Design", room: "C-105", faculty: "Dr. Verma" },
-        ],
-        "Tuesday": [
-          { time: "09:00-10:00", subject: "DBMS Lab", room: "Lab-2", faculty: "Dr. Sharma" },
-          { time: "10:00-11:00", subject: "DBMS Lab", room: "Lab-2", faculty: "Dr. Sharma" },
-          { time: "11:00-12:00", subject: "Operating Systems", room: "C-101", faculty: "Dr. Kumar" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Computer Networks", room: "C-104", faculty: "Dr. Patel" },
-          { time: "02:00-03:00", subject: "Compiler Design", room: "C-105", faculty: "Dr. Verma" },
-        ],
-        "Wednesday": [
-          { time: "09:00-10:00", subject: "Computer Networks", room: "C-104", faculty: "Dr. Patel" },
-          { time: "10:00-11:00", subject: "Software Engineering", room: "C-103", faculty: "Dr. Singh" },
-          { time: "11:00-12:00", subject: "DBMS", room: "C-102", faculty: "Dr. Sharma" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Operating Systems", room: "C-101", faculty: "Dr. Kumar" },
-          { time: "02:00-03:00", subject: "Compiler Design", room: "C-105", faculty: "Dr. Verma" },
-        ],
-        "Thursday": [
-          { time: "09:00-10:00", subject: "Operating Systems Lab", room: "Lab-1", faculty: "Dr. Kumar" },
-          { time: "10:00-11:00", subject: "Operating Systems Lab", room: "Lab-1", faculty: "Dr. Kumar" },
-          { time: "11:00-12:00", subject: "Software Engineering", room: "C-103", faculty: "Dr. Singh" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "DBMS", room: "C-102", faculty: "Dr. Sharma" },
-          { time: "02:00-03:00", subject: "Computer Networks", room: "C-104", faculty: "Dr. Patel" },
-        ],
-        "Friday": [
-          { time: "09:00-10:00", subject: "Compiler Design", room: "C-105", faculty: "Dr. Verma" },
-          { time: "10:00-11:00", subject: "Computer Networks Lab", room: "Lab-3", faculty: "Dr. Patel" },
-          { time: "11:00-12:00", subject: "Computer Networks Lab", room: "Lab-3", faculty: "Dr. Patel" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Software Engineering", room: "C-103", faculty: "Dr. Singh" },
-          { time: "02:00-03:00", subject: "Operating Systems", room: "C-101", faculty: "Dr. Kumar" },
-        ],
-        "Saturday": [
-          { time: "09:00-10:00", subject: "Compiler Design Lab", room: "Lab-4", faculty: "Dr. Verma" },
-          { time: "10:00-11:00", subject: "Compiler Design Lab", room: "Lab-4", faculty: "Dr. Verma" },
-          { time: "11:00-12:00", subject: "DBMS", room: "C-102", faculty: "Dr. Sharma" },
-        ],
-        "Sunday": []
-      },
-      "CSE-6C": {
-        "Monday": [
-          { time: "09:00-10:00", subject: "Computer Networks", room: "D-201", faculty: "Dr. Patel" },
-          { time: "10:00-11:00", subject: "Compiler Design", room: "D-202", faculty: "Dr. Verma" },
-          { time: "11:00-12:00", subject: "DBMS", room: "D-203", faculty: "Dr. Sharma" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Software Engineering", room: "D-204", faculty: "Dr. Singh" },
-          { time: "02:00-03:00", subject: "Operating Systems", room: "D-205", faculty: "Dr. Kumar" },
-        ],
-        "Tuesday": [
-          { time: "09:00-10:00", subject: "Software Engineering", room: "D-204", faculty: "Dr. Singh" },
-          { time: "10:00-11:00", subject: "DBMS", room: "D-203", faculty: "Dr. Sharma" },
-          { time: "11:00-12:00", subject: "Computer Networks", room: "D-201", faculty: "Dr. Patel" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Operating Systems Lab", room: "Lab-1", faculty: "Dr. Kumar" },
-          { time: "02:00-03:00", subject: "Operating Systems Lab", room: "Lab-1", faculty: "Dr. Kumar" },
-        ],
-        "Wednesday": [
-          { time: "09:00-10:00", subject: "Compiler Design", room: "D-202", faculty: "Dr. Verma" },
-          { time: "10:00-11:00", subject: "Operating Systems", room: "D-205", faculty: "Dr. Kumar" },
-          { time: "11:00-12:00", subject: "Software Engineering", room: "D-204", faculty: "Dr. Singh" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "DBMS Lab", room: "Lab-2", faculty: "Dr. Sharma" },
-          { time: "02:00-03:00", subject: "DBMS Lab", room: "Lab-2", faculty: "Dr. Sharma" },
-        ],
-        "Thursday": [
-          { time: "09:00-10:00", subject: "Computer Networks", room: "D-201", faculty: "Dr. Patel" },
-          { time: "10:00-11:00", subject: "DBMS", room: "D-203", faculty: "Dr. Sharma" },
-          { time: "11:00-12:00", subject: "Compiler Design", room: "D-202", faculty: "Dr. Verma" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "Software Engineering", room: "D-204", faculty: "Dr. Singh" },
-          { time: "02:00-03:00", subject: "Operating Systems", room: "D-205", faculty: "Dr. Kumar" },
-        ],
-        "Friday": [
-          { time: "09:00-10:00", subject: "Computer Networks Lab", room: "Lab-3", faculty: "Dr. Patel" },
-          { time: "10:00-11:00", subject: "Computer Networks Lab", room: "Lab-3", faculty: "Dr. Patel" },
-          { time: "11:00-12:00", subject: "Operating Systems", room: "D-205", faculty: "Dr. Kumar" },
-          { time: "12:00-01:00", subject: "LUNCH BREAK", room: "-", faculty: "-" },
-          { time: "01:00-02:00", subject: "DBMS", room: "D-203", faculty: "Dr. Sharma" },
-          { time: "02:00-03:00", subject: "Compiler Design", room: "D-202", faculty: "Dr. Verma" },
-        ],
-        "Saturday": [
-          { time: "09:00-10:00", subject: "Compiler Design Lab", room: "Lab-4", faculty: "Dr. Verma" },
-          { time: "10:00-11:00", subject: "Compiler Design Lab", room: "Lab-4", faculty: "Dr. Verma" },
-          { time: "11:00-12:00", subject: "Software Engineering", room: "D-204", faculty: "Dr. Singh" },
-        ],
-        "Sunday": []
-      }
-    };
-
-    return { sections: sectionsData, timetable: timetableData };
-  } catch (error) {
-    console.error("Error parsing Excel files:", error);
-    throw error;
+  // Return cached data if available
+  if (cachedData) {
+    return cachedData;
   }
+
+  try {
+    // Fetch and parse the section detail Excel file (contains both timetable and roll mappings)
+    const sdResponse = await fetch('/data/6th_sem_Time-Table_and_Section_Detail.xlsx');
+    const sdBuffer = await sdResponse.arrayBuffer();
+    const sdWorkbook = XLSX.read(sdBuffer, { type: 'array' });
+    const sdSheet = sdWorkbook.Sheets[sdWorkbook.SheetNames[0]];
+    const sdData = XLSX.utils.sheet_to_json(sdSheet, { header: 1, defval: '' });
+
+    // Parse timetable
+    const timetable = parseTimetable(sdData);
+    
+    // Parse sections (roll number to section mapping)
+    const sections = parseSections(sdData);
+
+    cachedData = { sections, timetable };
+    return cachedData;
+  } catch (error) {
+    console.error('Error parsing Excel files:', error);
+    
+    // Return empty data structure on error
+    return {
+      sections: {},
+      timetable: {}
+    };
+  }
+};
+
+const parseTimetable = (data) => {
+  const timetable = {};
+  const days = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
+  
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    
+    // Check if this row has a day
+    if (row[0] && days.includes(row[0].toString().toUpperCase())) {
+      const day = row[0].toString();
+      const section = row[1]?.toString().trim();
+      
+      if (!section || section === 'Section') continue;
+      
+      // Initialize section if not exists
+      if (!timetable[section]) {
+        timetable[section] = {};
+      }
+      
+      // Map day names
+      const dayMap = {
+        'MON': 'Monday',
+        'TUE': 'Tuesday',
+        'WED': 'Wednesday',
+        'THU': 'Thursday',
+        'FRI': 'Friday'
+      };
+      
+      const fullDay = dayMap[day.toUpperCase()] || day;
+      
+      // Parse the periods for this day
+      const periods = parsePeriods(row);
+      timetable[section][fullDay] = periods;
+    }
+  }
+  
+  // Add empty arrays for Saturday and Sunday
+  Object.keys(timetable).forEach(section => {
+    timetable[section]['Saturday'] = [];
+    timetable[section]['Sunday'] = [];
+  });
+  
+  return timetable;
+};
+
+const parsePeriods = (row) => {
+  const periods = [];
+  
+  // Time slot mappings based on Excel structure
+  // Columns: DAY, Section, ROOM1, 8-9, ROOM2, 9-10, 10-11, ROOM3, 11-12, ROOM4, 12-1, 1-2, ROOM5, 2-3, ROOM6, 3.15-4.15, ROOM7, 4.15-5.15, 5.15-6.15
+  const timeSlots = [
+    { index: 3, room: 2, time: '8:00-9:00' },
+    { index: 5, room: 4, time: '9:00-10:00' },
+    { index: 6, room: 4, time: '10:00-11:00' },
+    { index: 8, room: 7, time: '11:00-12:00' },
+    { index: 10, room: 9, time: '12:00-1:00' },
+    { index: 11, room: 9, time: '1:00-2:00' },
+    { index: 13, room: 12, time: '2:00-3:00' },
+    { index: 15, room: 14, time: '3:15-4:15' }
+  ];
+  
+  for (const slot of timeSlots) {
+    const subject = row[slot.index]?.toString().trim();
+    const room = row[slot.room]?.toString().trim();
+    
+    if (subject && subject !== 'X' && subject !== '---' && subject !== '') {
+      // Check if it's a break
+      if (subject.toLowerCase().includes('break')) {
+        periods.push({
+          time: slot.time,
+          subject: 'Break',
+          room: '-',
+          faculty: '-'
+        });
+      } else {
+        // Clean up subject names - replace | with comma and handle lab notation
+        let cleanSubject = subject.replace(/\\/g, ' / ');
+        
+        periods.push({
+          time: slot.time,
+          subject: cleanSubject,
+          room: room || '-',
+          faculty: '-' // Faculty info not in Excel
+        });
+      }
+    }
+  }
+  
+  return periods;
+};
+
+const parseSections = (data) => {
+  const sections = {};
+  let foundMapping = false;
+  
+  // Find where the roll number mapping starts
+  // It usually starts after many rows and has format: Roll Number | Section
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    
+    // Check if we found the mapping section (starts with 7-8 digit numbers)
+    if (row[0]?.toString().match(/^\d{7,8}$/)) {
+      foundMapping = true;
+    }
+    
+    if (foundMapping && row[0] && row[1]) {
+      const rollNumber = row[0].toString().trim();
+      const section = row[1].toString().trim();
+      
+      // Validate roll number format (7-8 digits)
+      if (rollNumber.match(/^\d{7,8}$/) && section) {
+        sections[rollNumber] = section;
+      }
+    }
+  }
+  
+  return sections;
 };
 
 /**
