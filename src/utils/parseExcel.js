@@ -69,36 +69,51 @@ const parseTimetable = (data) => {
 
 const parsePeriods = (row) => {
   const periods = [];
-  const timeSlots = [
-  { index: 3, room: 2, time: "8:00-9:00" },         // ROOM1 + 8-9
-  { index: 5, room: 4, time: "9:00-10:00" },        // ROOM2 + 9-10
-  { index: 6, room: 4, time: "10:00-11:00" },       // ROOM2 + 10-11
-  { index: 8, room: 7, time: "11:00-12:00" },       // ROOM3 + 11-12
-  { index: 10, room: 9, time: "12:00-1:00" },       // ROOM4 + 12-1
-  { index: 11, room: 9, time: "1:00-2:00" },        // ROOM4 + 1-2
-  { index: 13, room: 12, time: "2:00-3:00" },       // ROOM5 + 2-3
-  { index: 15, room: 14, time: "3:15-4:15" },       // ROOM6 + 3:15-4:15
-  { index: 17, room: 16, time: "4:15-5:15" },       // ROOM7 + 4:15-5:15
-  { index: 18, room: 16, time: "5:15-6:15" },       // ROOM7 + 5:15-6:15
-];
 
+  const slots = [
+    { time: "8:00-9:00",    subject: 3,  room: 2 },
+    { time: "9:00-10:00",   subject: 5,  room: 4 },
+    { time: "10:00-11:00",  subject: 6,  room: 4 },
+    { time: "11:00-12:00",  subject: 8,  room: 7 },
+    { time: "12:00-1:00",   subject:10,  room: 9 },
+    { time: "1:00-2:00",    subject:11,  room: 9 },
+    { time: "2:00-3:00",    subject:13,  room:12 },
+    { time: "3:15-4:15",    subject:15,  room:14 },
+    { time: "4:15-5:15",    subject:17,  room:16 },
+    { time: "5:15-6:15",    subject:18,  room:16 }
+  ];
 
-  for (const slot of timeSlots) {
-    const subject = row[slot.index]?.toString().trim();
+  for (const slot of slots) {
+    const subject = row[slot.subject]?.toString().trim();
     const room = row[slot.room]?.toString().trim();
 
-    if (subject && subject !== 'X' && subject !== '---' && subject !== '') {
-      if (subject.toLowerCase().includes('break')) {
-        periods.push({ time: slot.time, subject: 'Break', room: '-', faculty: '-' });
-      } else {
-        let cleanSubject = subject.replace(/\\/g, ' / ').replace(/\|/g, ', ');
-        periods.push({ time: slot.time, subject: cleanSubject, room: room || '-', faculty: '-' });
-      }
+    // Skip empty / ---
+    if (!subject || subject === "" || subject === "---") continue;
+
+    // Free Period
+    if (subject === "X") {
+      periods.push({
+        time: slot.time,
+        subject: "Free Period",
+        room: room || "-",
+        faculty: "-"
+      });
+      continue;
     }
+
+    // Regular class
+    periods.push({
+      time: slot.time,
+      subject,
+      room: room || "-",
+      faculty: "-"
+    });
   }
 
   return periods;
 };
+
+
 
 const parseSections = (data) => {
   const sections = {};

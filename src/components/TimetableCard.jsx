@@ -12,7 +12,7 @@ const TimetableCard = ({ data, view, onViewChange, onBack }) => {
           <tr className="border-b border-border">
             <th className="text-left py-4 px-4 text-foreground font-poppins font-semibold">Time</th>
             <th className="text-left py-4 px-4 text-foreground font-poppins font-semibold">Subject</th>
-            <th className="text-left py-4 px-4 text-foreground font-poppins font-semibold hidden md:table-cell">Room</th>
+            <th className="text-left py-4 px-4 text-foreground font-poppins font-semibold ">Room</th>
             <th className="text-left py-4 px-4 text-foreground font-poppins font-semibold hidden lg:table-cell">Faculty</th>
           </tr>
         </thead>
