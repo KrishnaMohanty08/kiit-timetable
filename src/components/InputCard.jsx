@@ -12,8 +12,8 @@ const InputCard = ({ onSubmit }) => {
       return;
     }
     
-    if (!/^\d{8}$/.test(rollNumber.trim())) {
-      setError('Please enter a valid 8-digit roll number');
+    if (!/^\d{7,8}$/.test(rollNumber.trim())) {
+      setError('Please enter a valid 7-8 digit roll number');
       return;
     }
     
@@ -45,7 +45,7 @@ const InputCard = ({ onSubmit }) => {
             type="text"
             value={rollNumber}
             onChange={(e) => setRollNumber(e.target.value)}
-            placeholder="e.g., 23051001"
+            placeholder="e.g., 2305070 or 23051001"
             maxLength={8}
             className="w-full px-6 py-4 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-lg"
           />
@@ -66,7 +66,7 @@ const InputCard = ({ onSubmit }) => {
 
       <div className="mt-8 text-center">
         <p className="text-muted-foreground text-sm">
-          Sample Roll Numbers: 23051001, 23051025, 23051050
+          Try roll numbers like: 2305070, 23051001, or 2306001
         </p>
       </div>
     </div>
