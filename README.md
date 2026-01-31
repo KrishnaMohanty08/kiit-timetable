@@ -1,4 +1,4 @@
-# KIIT Timetable (KIIT Saathi) 📚
+# KIIT Timetable 
 
 A smart, modern web application for KIIT University students to view their class schedules. Simply enter your roll number to get your personalized timetable.
 
@@ -194,35 +194,6 @@ This project is open source and available for educational purposes.
 - All contributors and users of this application
 - Open source community for amazing tools and libraries
 
-## 📞 Support
-
-For issues, questions, or suggestions:
-- Open an issue on GitHub
-- Contact the maintainer
-
-## 🗺️ Roadmap
-
-- [ ] Offline support with Service Worker
-- [ ] Dark mode toggle
-- [ ] Export to calendar (iCal)
-- [ ] Class reminders and notifications
-- [ ] Multiple semester support
-- [ ] Faculty view
-- [ ] Room availability checker
-- [ ] Backend API integration
-
-## 📊 System Overview
-
-### Architecture
-```
-User Interface (React)
-        ↓
-State Management (React Query)
-        ↓
-Data Processing (XLSX Parser)
-        ↓
-Static Data (Excel Files)
-```
 
 ### Key Features
 - **Client-side processing**: All data parsing happens in the browser
@@ -246,6 +217,3 @@ Static Data (Excel Files)
 - **Bundle Size**: Optimized with code splitting
 - **Lighthouse Score**: 90+ on all metrics
 
----
-
-Made with 💚 for KIIT Students
