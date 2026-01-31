@@ -114,7 +114,14 @@ Commit Changes
     ↓
 Push to Branch
     ↓
+CI/CD Pipeline Runs
+    ├── Linting (ESLint)
+    ├── Build Check
+    └── Multi-version Testing
+    ↓
 Create Pull Request
+    ↓
+Automated Checks Pass
     ↓
 Code Review
     ↓
@@ -125,9 +132,27 @@ Merge to Main
 Deploy to Production
 ```
 
+### 5. CI/CD Pipeline
+
+The project uses GitHub Actions for continuous integration and deployment automation.
+
+**Workflow Triggers:**
+- Push to `main` or `develop` branches
+- Pull requests to `main` or `develop` branches
+
+**Pipeline Steps:**
+1. Checkout code
+2. Setup Node.js (versions 18.x and 20.x)
+3. Install dependencies (`npm ci`)
+4. Run ESLint for code quality
+5. Build application (`npm run build`)
+6. Upload build artifacts (Node 20.x only)
+
+**Configuration File:** `.github/workflows/ci.yml`
+
 ## Component Workflow
 
-### 5. Component Interaction Flow
+### 6. Component Interaction Flow
 
 ```
 App.tsx (Root)
@@ -146,7 +171,7 @@ App.tsx (Root)
     └── Toast Notifications
 ```
 
-### 6. State Management Workflow
+### 7. State Management Workflow
 
 ```
 Initial State
@@ -170,7 +195,7 @@ Fetch & Parse Data
 
 ## API/Data Access Workflow
 
-### 7. Excel Data Parsing Flow
+### 8. Excel Data Parsing Flow
 
 ```
 parseExcelFiles()
@@ -203,7 +228,7 @@ Check Cache
     Return Data Object
 ```
 
-### 8. Query Processing Workflow
+### 9. Query Processing Workflow
 
 ```
 getTodayTimetable(rollNumber)
@@ -234,7 +259,7 @@ getTodayTimetable(rollNumber)
 
 ## Deployment Workflow
 
-### 9. Build and Deploy Process
+### 10. Build and Deploy Process
 
 ```
 Development
@@ -255,7 +280,7 @@ Deploy to Hosting
 Production Environment
 ```
 
-### 10. Testing Workflow
+### 11. Testing Workflow
 
 ```
 Component Testing
@@ -281,7 +306,7 @@ Performance Testing
 
 ## Maintenance Workflow
 
-### 11. Regular Maintenance Tasks
+### 12. Regular Maintenance Tasks
 
 1. **Semester Updates**
    - Upload new Excel files
@@ -304,7 +329,7 @@ Performance Testing
 
 ## Error Handling Workflow
 
-### 12. Error Recovery Process
+### 13. Error Recovery Process
 
 ```
 User Action
@@ -335,8 +360,9 @@ Display Result
 1. **User Input Flow**: Roll number → Validation → Data fetch → Display
 2. **Data Processing Flow**: Excel file → Parse → Cache → Query → Render
 3. **Development Flow**: Code → Test → Build → Deploy
-4. **Update Flow**: New data → Upload → Test → Deploy
-5. **Error Flow**: Error detected → Handle → Inform user → Allow retry
+4. **CI/CD Flow**: Push → Automated checks (lint, build, test) → Review → Merge
+5. **Update Flow**: New data → Upload → Test → Deploy
+6. **Error Flow**: Error detected → Handle → Inform user → Allow retry
 
 ## Best Practices
 
@@ -347,3 +373,6 @@ Display Result
 5. **Keep documentation updated** with code changes
 6. **Use semantic versioning** for releases
 7. **Monitor performance** and optimize as needed
+8. **Run CI checks locally** before pushing code
+9. **Review CI/CD pipeline results** before merging PRs
+10. **Keep dependencies updated** for security and features

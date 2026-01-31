@@ -6,6 +6,7 @@ A smart, modern web application to view their class schedules. Simply enter your
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue)
 ![Vite](https://img.shields.io/badge/Vite-5.4.19-purple)
+![CI](https://github.com/KrishnaMohanty08/kiit-timetable/workflows/CI/badge.svg)
 
 ## ✨ Features
 
@@ -44,9 +45,12 @@ The application will be available at `http://localhost:8080`
 
 ## 📖 Documentation
 
-Comprehensive documentation is available in the following files:
+Comprehensive documentation is available in the `docs/` directory:
 
-### 📋 [WORKFLOW.md](./WORKFLOW.md)
+### 📑 [DOCUMENTATION_INDEX.md](./docs/DOCUMENTATION_INDEX.md)
+Complete documentation index with navigation guide for all documentation files.
+
+### 📋 [WORKFLOW.md](./docs/WORKFLOW.md)
 Complete workflow documentation covering:
 - User journey and data flow
 - Development and deployment processes
@@ -54,7 +58,7 @@ Complete workflow documentation covering:
 - Error handling procedures
 - Best practices
 
-### 🏗️ [SYSTEM_DESIGN.md](./SYSTEM_DESIGN.md)
+### 🏗️ [SYSTEM_DESIGN.md](./docs/SYSTEM_DESIGN.md)
 Detailed system architecture including:
 - Component hierarchy and architecture diagrams
 - Data models and flow
@@ -62,7 +66,7 @@ Detailed system architecture including:
 - Security and performance architecture
 - Scalability considerations
 
-### 🔧 [BACKEND_PROCEDURES.md](./BACKEND_PROCEDURES.md)
+### 🔧 [BACKEND_PROCEDURES.md](./docs/BACKEND_PROCEDURES.md)
 Backend data processing documentation:
 - Excel file parsing procedures
 - Data transformation algorithms
@@ -70,7 +74,7 @@ Backend data processing documentation:
 - Query processing
 - Data update procedures
 
-### 🎨 [FRONTEND_PROCEDURES.md](./FRONTEND_PROCEDURES.md)
+### 🎨 [FRONTEND_PROCEDURES.md](./docs/FRONTEND_PROCEDURES.md)
 Frontend development guide:
 - Component architecture and state management
 - User interaction flows
@@ -100,25 +104,40 @@ Frontend development guide:
 kiit-timetable/
 ├── public/
 │   ├── data/                          # Excel timetable files
-│   │   └── 6th_sem_Time-Table_and_Section_Detail.xlsx
-│   └── favicon.ico
+│   │   ├── 6th_sem_Time-Table_and_Section_Detail.xlsx
+│   │   └── 4thSem25-26CSEClassList.xlsx
+│   ├── favicon.ico
+│   ├── placeholder.svg
+│   └── robots.txt
 ├── src/
 │   ├── components/
-│   │   ├── InputCard.jsx              # Roll number input
-│   │   ├── TimetableCard.jsx          # Schedule display
-│   │   └── ui/                        # Reusable UI components
+│   │   ├── InputCard.tsx              # Roll number input
+│   │   ├── TimetableCard.tsx          # Schedule display
+│   │   ├── NavLink.tsx                # Navigation link component
+│   │   └── ui/                        # Reusable UI components (50+)
 │   ├── pages/
 │   │   ├── Index.tsx                  # Main page
 │   │   └── NotFound.tsx               # 404 page
 │   ├── utils/
 │   │   ├── parseExcel.js              # Excel parsing logic
-│   │   └── generateJsonFromExcel.js   # Data generation
+│   │   ├── generateJsonFromExcel.js   # Data generation
+│   │   └── parse1stCse.ts             # 1st year CSE parsing
+│   ├── lib/
+│   │   ├── utils.ts                   # Utility functions
+│   │   ├── year1stSchemeA_B.js        # Curriculum data
+│   │   ├── civilTimetable.ts          # Civil engineering timetable
+│   │   └── mechanicalTimetable.ts     # Mechanical engineering timetable
+│   ├── hooks/
+│   │   ├── use-toast.ts               # Toast notifications hook
+│   │   └── use-mobile.tsx             # Mobile detection hook
 │   ├── App.tsx                        # Root component
 │   └── main.tsx                       # Entry point
-├── WORKFLOW.md                        # Workflow documentation
-├── SYSTEM_DESIGN.md                   # Architecture documentation
-├── BACKEND_PROCEDURES.md              # Backend guide
-├── FRONTEND_PROCEDURES.md             # Frontend guide
+├── docs/
+│   ├── DOCUMENTATION_INDEX.md         # Documentation navigation
+│   ├── WORKFLOW.md                    # Workflow documentation
+│   ├── SYSTEM_DESIGN.md               # Architecture documentation
+│   ├── BACKEND_PROCEDURES.md          # Backend guide
+│   └── FRONTEND_PROCEDURES.md         # Frontend guide
 └── README.md                          # This file
 ```
 
@@ -139,7 +158,7 @@ To update timetable data for a new semester:
 3. Test with sample roll numbers
 4. Build and deploy
 
-See [BACKEND_PROCEDURES.md](./BACKEND_PROCEDURES.md) for detailed instructions.
+See [BACKEND_PROCEDURES.md](./docs/BACKEND_PROCEDURES.md) for detailed instructions.
 
 ## 🧪 Testing
 
@@ -153,6 +172,16 @@ npm run build
 # Preview production build
 npm run preview
 ```
+
+## 🔄 Continuous Integration
+
+This project uses GitHub Actions for continuous integration. On every push and pull request to `main` or `develop` branches, the following checks are run:
+
+- Code linting with ESLint
+- Production build verification
+- Multi-version Node.js testing (18.x, 20.x)
+
+See [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) for workflow details.
 
 ## 🏗️ Building for Production
 
