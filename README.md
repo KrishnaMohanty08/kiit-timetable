@@ -1,6 +1,6 @@
 # KIIT Timetable 
 
-A smart, modern web application for KIIT University students to view their class schedules. Simply enter your roll number to get your personalized timetable.
+A smart, modern web application to view their class schedules. Simply enter your roll number to get your personalized timetable.
 
 ![KIIT Timetable](https://img.shields.io/badge/Status-Active-success)
 ![React](https://img.shields.io/badge/React-18.3.1-blue)
