@@ -9,8 +9,8 @@ This file provides an overview of all available documentation for the KIIT Timet
 ## 🎯 Quick Navigation
 
 ### For Users
-- **Getting Started**: See [README.md](./README.md) - Installation and usage guide
-- **How to Use**: See [README.md - Usage Section](./README.md#-usage)
+- **Getting Started**: See [README.md](../README.md) - Installation and usage guide
+- **How to Use**: See [README.md - Usage Section](../README.md#-usage)
 
 ### For Developers
 - **System Architecture**: See [SYSTEM_DESIGN.md](./SYSTEM_DESIGN.md)
@@ -19,7 +19,7 @@ This file provides an overview of all available documentation for the KIIT Timet
 - **Backend/Data Processing**: See [BACKEND_PROCEDURES.md](./BACKEND_PROCEDURES.md)
 
 ### For Contributors
-- **Contributing Guide**: See [README.md - Contributing](./README.md#-contributing)
+- **Contributing Guide**: See [README.md - Contributing](../README.md#-contributing)
 - **Code Workflow**: See [WORKFLOW.md](./WORKFLOW.md)
 - **Best Practices**: See all procedure documents
 
@@ -27,7 +27,7 @@ This file provides an overview of all available documentation for the KIIT Timet
 
 ## 📖 Documentation Structure
 
-### 1. [README.md](./README.md) - Project Overview
+### 1. [README.md](../README.md) - Project Overview
 **Who should read**: Everyone
 
 **Contents:**
@@ -192,8 +192,8 @@ This file provides an overview of all available documentation for the KIIT Timet
 ## 🔍 Find Documentation by Topic
 
 ### Setup & Installation
-- **Installation**: [README.md - Quick Start](./README.md#-quick-start)
-- **Prerequisites**: [README.md - Prerequisites](./README.md#prerequisites)
+- **Installation**: [README.md - Quick Start](../README.md#-quick-start)
+- **Prerequisites**: [README.md - Prerequisites](../README.md#prerequisites)
 - **Development Setup**: [WORKFLOW.md - Development Process](./WORKFLOW.md#3-development-process)
 
 ### Architecture & Design
@@ -223,9 +223,9 @@ This file provides an overview of all available documentation for the KIIT Timet
 - **Best Practices**: See individual procedure documents
 
 ### Deployment
-- **Build Process**: [README.md - Building](./README.md#-building-for-production)
+- **Build Process**: [README.md - Building](../README.md#-building-for-production)
 - **Deployment Workflow**: [WORKFLOW.md - Deployment](./WORKFLOW.md#9-build-and-deploy-process)
-- **Hosting**: [README.md - Hosting Platforms](./README.md#recommended-hosting-platforms)
+- **Hosting**: [README.md - Hosting Platforms](../README.md#recommended-hosting-platforms)
 
 ---
 
@@ -234,10 +234,10 @@ This file provides an overview of all available documentation for the KIIT Timet
 ### I want to...
 
 **...understand what this project does**
-→ Read [README.md](./README.md)
+→ Read [README.md](../README.md)
 
 **...set up the development environment**
-→ Follow [README.md - Quick Start](./README.md#-quick-start) and [WORKFLOW.md - Setup Phase](./WORKFLOW.md#a-setup-phase)
+→ Follow [README.md - Quick Start](../README.md#-quick-start) and [WORKFLOW.md - Setup Phase](./WORKFLOW.md#a-setup-phase)
 
 **...understand the architecture**
 → Study [SYSTEM_DESIGN.md](./SYSTEM_DESIGN.md)
@@ -255,10 +255,10 @@ This file provides an overview of all available documentation for the KIIT Timet
 → Check [WORKFLOW.md - Error Handling](./WORKFLOW.md#12-error-recovery-process) and component-specific procedures
 
 **...deploy the application**
-→ Follow [README.md - Building](./README.md#-building-for-production) and [WORKFLOW.md - Deployment](./WORKFLOW.md#9-build-and-deploy-process)
+→ Follow [README.md - Building](../README.md#-building-for-production) and [WORKFLOW.md - Deployment](./WORKFLOW.md#9-build-and-deploy-process)
 
 **...contribute to the project**
-→ Read [README.md - Contributing](./README.md#-contributing)
+→ Read [README.md - Contributing](../README.md#-contributing)
 
 **...understand data flow**
 → Study [WORKFLOW.md - Data Flow](./WORKFLOW.md#2-data-flow-workflow) and [BACKEND_PROCEDURES.md - Pipeline](./BACKEND_PROCEDURES.md#data-processing-pipeline)
@@ -270,7 +270,7 @@ This file provides an overview of all available documentation for the KIIT Timet
 ### For New Contributors
 
 **Day 1: Understanding the Project**
-1. Read [README.md](./README.md) - Get overview
+1. Read [README.md](../README.md) - Get overview
 2. Skim [WORKFLOW.md](./WORKFLOW.md) - Understand processes
 3. Set up development environment
 

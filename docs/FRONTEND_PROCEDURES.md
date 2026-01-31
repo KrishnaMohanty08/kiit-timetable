@@ -30,8 +30,8 @@ src/
 │   ├── Index.tsx              # Main page controller
 │   └── NotFound.tsx           # 404 page
 ├── components/
-│   ├── InputCard.jsx          # Roll number input
-│   ├── TimetableCard.jsx      # Schedule display
+│   ├── InputCard.tsx          # Roll number input
+│   ├── TimetableCard.tsx      # Schedule display
 │   ├── NavLink.tsx            # Navigation helper
 │   └── ui/                    # Reusable UI components
 │       ├── badge.tsx
@@ -40,14 +40,19 @@ src/
 │       ├── input.tsx
 │       ├── tabs.tsx
 │       ├── toast.tsx
-│       └── ... (40+ components)
+│       └── ... (50+ components)
 ├── utils/
 │   ├── parseExcel.js          # Data parsing
-│   └── generateJsonFromExcel.js
+│   ├── generateJsonFromExcel.js
+│   └── parse1stCse.ts         # 1st year CSE parsing
 ├── lib/
-│   └── utils.ts               # Helper functions
+│   ├── utils.ts               # Helper functions
+│   ├── year1stSchemeA_B.js    # Curriculum data
+│   ├── civilTimetable.ts      # Civil engineering timetable
+│   └── mechanicalTimetable.ts # Mechanical engineering timetable
 └── hooks/
-    └── use-toast.ts           # Toast notifications
+    ├── use-toast.ts           # Toast notifications
+    └── use-mobile.tsx         # Mobile detection hook
 ```
 
 ---
