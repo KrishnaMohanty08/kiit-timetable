@@ -160,7 +160,7 @@ parseExcelFiles()
 #### 4. **Section Lookup**
 - Normalize roll number (remove non-digits)
 - Search in sections mapping
-- Normalize section name (e.g., CSCE-0 → CSE-)
+- Normalize section name (e.g., CSCE-01 → CSE-1, CSSE-02 → CSE-2, IT-01 → IT-1)
 - Retrieve section's timetable
 
 #### 5. **Data Presentation**
@@ -241,15 +241,23 @@ Excel File Structure:
 ```
 
 ### Time Slot Mapping
-The application maps Excel columns to time slots:
+The application maps specific Excel columns to time slots. The Excel structure has non-uniform column spacing:
 ```javascript
+// Actual column indices from the Excel file
 const slots = [
-  { time: "8:00-9:00",   subject: col 3,  room: col 2 },
-  { time: "9:00-10:00",  subject: col 5,  room: col 4 },
-  { time: "10:00-11:00", subject: col 6,  room: col 4 },
-  // ... and so on for all periods
+  { time: "8:00-9:00",    subject: column 3,  room: column 2 },
+  { time: "9:00-10:00",   subject: column 5,  room: column 4 },
+  { time: "10:00-11:00",  subject: column 6,  room: column 4 },
+  { time: "11:00-12:00",  subject: column 8,  room: column 7 },
+  { time: "12:00-1:00",   subject: column 10, room: column 9 },
+  { time: "1:00-2:00",    subject: column 11, room: column 9 },
+  { time: "2:00-3:00",    subject: column 13, room: column 12 },
+  { time: "3:15-4:15",    subject: column 15, room: column 14 },
+  { time: "4:15-5:15",    subject: column 17, room: column 16 },
+  { time: "5:15-6:15",    subject: column 18, room: column 16 }
 ];
 ```
+*Note: The irregular column pattern reflects the actual Excel file structure where subject and room data are interspersed.*
 
 ---
 
